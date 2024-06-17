@@ -49,19 +49,19 @@ This is a web application for an online pizza store built using React for the fr
     - Navigate to `http://localhost:3000/cart` to view the pizzas in your cart.
     - Edit or delete pizzas as needed.
     - Click "Buy" to proceed to the client information form.
-![image](https://github.com/Solange-s-Courses/ex4-react-spring-women-hadas-odaya/assets/154980811/cf69dd26-1014-4a45-b481-69ae85a6d8e8)
+![Cart Image](pizzeria/frontend/src/images/cart.png)
 
 3. **Client Information**:
     - Fill out the form with your personal details.
-![image](https://github.com/Solange-s-Courses/ex4-react-spring-women-hadas-odaya/assets/154980811/a5a45743-42b5-4892-b029-0e2628a8da1b)
+![client Info Image](pizzeria/frontend/src/images/clientInfo.png)
     - Click "Submit Order" to complete the order.
     - You will receive an order confirmation with an Order ID.
-![image](https://github.com/Solange-s-Courses/ex4-react-spring-women-hadas-odaya/assets/154980811/cf1f30a1-2183-4093-8459-748815915f1b)
+![order Confirmation Image](pizzeria/frontend/src/images/orderConfirmation.png)
 
 4. **Old Order**:
     - Navigate to `http://localhost:3000/oldOrder`.
     - Enter your Order ID to retrieve your previous order details.
-![image](https://github.com/Solange-s-Courses/ex4-react-spring-women-hadas-odaya/assets/154980811/73726f28-b55d-4df4-a301-b27b46aa1ea0)
+![old Order Image](pizzeria/frontend/src/images/oldOrder.png)
 
 #### Notes
 - **Using js-cookie**: We used the `js-cookie` library to store user details in cookies, allowing the form to be pre-filled with the user's information on subsequent visits.
