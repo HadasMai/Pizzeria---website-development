@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // creating a LISTENER for the form submission EVENT:
+        // we prevent the default behavior of form submit button and create
+        // an ajax call to send JSON data that will be converted to
+        // a LoginForm object in Java
+        document.getElementById("user-form").addEventListener("submit", (event) => {
+            event.preventDefault();
+            const { value: username } = document.getElementById("username");
+            const { value: password } = document.getElementById("password");
+            fetch(event.target.action, {
+                method: "POST",
+                body: JSON.stringify({ username, password }),
+                headers: { "Content-Type": "application/json" },
+            }).then(
+                (response) => response.json()
+            ).then(
+                (data) => (document.getElementById("answer1").innerHTML = "OK 200 response received. Check IntelliJ console for the received object.")
+            );
+        });
+        document.getElementById("request1").addEventListener("click", (event) => {
+            event.preventDefault();
+            const { value: username } = document.getElementById("username");
+            const { value: password } = document.getElementById("password");
+            fetch("/form/response", {
+                method: "POST",
+                body: JSON.stringify({ username, password }),
+                headers: { "Content-Type": "application/json" },
+            }).then(
+                (response) => response.json()
+            ).then(
+                ({ text }) => (document.getElementById("answer2").innerHTML = text)
+            );
+        });
+        document.getElementById("book-form").addEventListener("submit", (event) => {
+            event.preventDefault();
+            const { value: title } = document.getElementById("title");
+            const { value: author } = document.getElementById("author");
+            fetch(event.target.action, {
+                method: "POST",
+                body: JSON.stringify({ title, author }),
+                headers: { "Content-Type": "application/json" },
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error("HTTP error, status = " + response.status);
+                }
+                return response;
+
+            }).then(
+                (response) => response.json()
+            ).then(
+                (data) => (document.getElementById("answer-post").innerHTML = `Book added with id: ${data.id}`)
+            ).catch((error) => {
+                document.getElementById("answer-post").innerHTML = "Error: " + error.message;
+            });
+        });
+    });
+
+</script>
+
+<h1>Book REST API example</h1>
+Try these REST calls with Postman (we are supposed to handle the (JSON) response in javascript):
+<ol>
+    <li><a href="http://localhost:8080/api/42">http://localhost:8080/api/42</a> : returns some JSON book object</li>
+    <li><a href="http://localhost:8080/api/55">http://localhost:8080/api/55</a>  : returns 404</li>
+    <li><a href="http://localhost:8080/api/author/someone/year/2000">http://localhost:8080/api/author/someone/year/2000</a>: returning a JSON array
+    <li><a href="http://localhost:8080/api">Show all database contents</a></li>
+</ol>
+
+<p>An Ajax form to add a book using a REST api:</p>
+<form id="book-form" action="/api" method="post">
+    <label for="title">Title:</label>
+    <input type="text" id="title"><br/><br/>
+    <label for="author">Author:</label>
+    <input type="text" id="author"><br/><br/>
+    <input type="submit">
+</form>
+<div>Answer:<span id="answer-post"></span></div>
+<hr/>
+<h1>Form example</h1>
+
+<p>Form data can simply be accessed using a MultiValueMap (Java class) request parameter (line 22 of the FormController).
+    Look at IntelliJ console output and click on a GET request to the route @GetMapping("/requestmap"):<br/>
+    <a href="http://localhost:8080/form/requestmap?a=10&message=hello">http://localhost:8080/form/requestmap?a=10&message=hello</a>
+</p>
+<hr/>
+<p>Now let's use the Sring @RequestBody ability to build an object from the client paramaters.
+    We will send a POST request to "/form/request" (line 32 of FormControler) with a JSON object containing a username and a password.
+    The server will convert this JSON object to a LoginForm object and return an OK 200 response.</p>
+<p>Check the IntelliJ output console:</p>
+<form id="user-form" action="/form/request">
+    <label for="username">username:</label>
+    <input type="text" name="username" id="username"><br/><br/>
+    <label for="password">password:</label>
+    <input type="password" name="password" id="password"><br/><br/>
+    <input type="submit" value="send POST to /form/request">
+</form>
+<br/>
+<div>Answer: <span id="answer1"></span></div>
+<br/>
+<hr/>
+<p>
+    Now we demonstrate a JSON response. Although the form is not some kind of api, we can make a route return JSON response simply
+    by returning an object using the @ResponseBody annotation (look at line 63 of the FormController class).
+Try this button sending a POST request to "/form/response". Check the IntelliJ output console to see the received LoginFormData object.</p>
+<input type="button" id="request1" value="send POST to /form/response">
+<br/>
+<div>Answer: <span id="answer2"></span></div>
+
+<hr/>
+</body>
+</html>
