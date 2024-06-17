@@ -43,7 +43,7 @@ This is a web application for an online pizza store built using React for the fr
     - Navigate to `http://localhost:3000/newOrder`.
     - Select at least two ingredients for a pizza and click "Add pizza to your cart".
     - You can add multiple pizzas to your cart.
-![New Order Image](images/newOrder.png)
+![New Order Image](pizzeria/frontend/src/images/newOrder.png.png)
 2. **Cart**:
     - Navigate to `http://localhost:3000/cart` to view the pizzas in your cart.
     - Edit or delete pizzas as needed.
